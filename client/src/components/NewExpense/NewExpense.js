@@ -5,11 +5,8 @@ import './NewExpense.css';
 
 const NewExpense = (props) => {
   const saveExpenseDataHandler = (enteredExpenseData) => {
-    const expenseData = {
-      ...enteredExpenseData,
-      id: Math.random().toString()
-    };
-    props.onAddExpense(expenseData);
+    // id shall be assigned by mongo db
+    props.onAddExpense(enteredExpenseData);
   };
 
   return (
