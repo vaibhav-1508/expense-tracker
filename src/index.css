@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Work+Sans:wght@300;400;700;900&display=swap');
+@import url('https://fonts.gstatic.com');
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: 'Work Sans', sans-serif;
 }
 
 body {
   margin: 0;
-  background-color: #3f3f3f;
+  background-color: #066774;
 }
