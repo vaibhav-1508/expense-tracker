@@ -12,13 +12,3 @@ body {
   margin: 0;
   background-color: #3f3f3f;
 }
-
-.app__heading{
-  max-width: 95%;
-  text-align: center;
-  margin: 2rem auto;
-  background-color: #b4f3f3;
-  border-radius: 12px;
-  width: 50rem;
-  padding: 1rem;
-}
