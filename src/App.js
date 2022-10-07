@@ -31,7 +31,7 @@ const App = () => {
   const addExpenseHandler = (expense) => {
     setExpenses((prevExpenses) => {
       const currExpenses = [expense, ...prevExpenses];
-      localStorage.setItem("expense-tracker", JSON.stringify({expenses: currExpenses}));
+      localStorage.setItem("expense-tracker", JSON.stringify({ expenses: currExpenses }));
       return currExpenses;
     });
   };
@@ -44,7 +44,10 @@ const App = () => {
   // );
 
   return (
-    <div>
+    <div className=''>
+      <h1 className='app__heading'>
+        Expense Tracker
+      </h1>
       <NewExpense onAddExpense={addExpenseHandler} />
       <Expenses items={expenses} />
     </div>
