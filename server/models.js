@@ -7,9 +7,10 @@ const userSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const expenseSchema = new mongoose.Schema({
+    user: { type: String, required: true },
     title: { type: String, required: true },
     amount: { type: String, required: true },
-    date: { type: Date, required: true }
+    date: { type: String, required: true }
 }, { timestamps: true });
 
 export const User = new mongoose.model("users", userSchema);

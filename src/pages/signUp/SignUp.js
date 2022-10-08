@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import validator from "validator";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -41,7 +41,12 @@ const theme = createTheme();
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    if (user) navigate(HOME_ROUTE);
+  }, [user, navigate]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -50,20 +55,21 @@ export default function SignUp() {
     const email = data.get("email");
     const password = data.get("password");
     if (validator.isEmail(email)) {
-      axios
-        .post(SIGN_UP_ENDPOINT, {
-          name: firstName + (lastName ? " " + lastName : ""),
-          email,
-          password,
-        })
-        .then((res) => {
-          const { result, token } = res.data;
-          setUser(result);
-          console.log(result);
-          console.log(token);
-          navigate(HOME_ROUTE);
-        })
-        .catch((err) => console.log(err));
+      try{
+        axios
+          .post(SIGN_UP_ENDPOINT, {
+            name: firstName + (lastName ? " " + lastName : ""),
+            email,
+            password,
+          })
+          .then((res) => {
+            const { result, token } = res.data;
+            setUser(result);
+            localStorage.setItem("expense-tracker", JSON.stringify({ token }));
+            navigate(HOME_ROUTE);
+          })
+          .catch((err) => console.log(err));
+      }catch(err){console.log(err);};
     }
   };
 
