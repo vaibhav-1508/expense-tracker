@@ -1,56 +1,45 @@
-import React, { useState } from 'react';
-
-import NewExpense from './components/NewExpense/NewExpense';
-import Expenses from './components/Expenses/Expenses';
-
-// const DUMMY_EXPENSES = [
-//   {
-//     id: 'e1',
-//     title: 'Toilet Paper',
-//     amount: 94.12,
-//     date: new Date(2020, 7, 14),
-//   },
-//   { id: 'e2', title: 'New TV', amount: 799.49, date: new Date(2021, 2, 12) },
-//   {
-//     id: 'e3',
-//     title: 'Car Insurance',
-//     amount: 294.67,
-//     date: new Date(2021, 2, 28),
-//   },
-//   {
-//     id: 'e4',
-//     title: 'New Desk (Wooden)',
-//     amount: 450,
-//     date: new Date(2021, 5, 12),
-//   },
-// ];
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// constants
+import { AUTH_TOKEN_ENDPOINT } from "./constants/endpoints";
+import { HOME_ROUTE, SIGN_IN_ROUTE, SIGN_UP_ROUTE } from "./constants/routes";
+// contexts
+import UserContext from "./contexts/userContext";
+// pages
+import Home from "./pages/home/Home";
+import SignIn from "./pages/signIn/SignIn";
+import SignUp from "./pages/signUp/SignUp";
 
 const App = () => {
-  const [expenses, setExpenses] = useState(JSON.parse(localStorage.getItem("expense-tracker"))?.expenses || []);
+  const [user, setUser] = useState(null);
 
-  const addExpenseHandler = (expense) => {
-    setExpenses((prevExpenses) => {
-      const currExpenses = [expense, ...prevExpenses];
-      localStorage.setItem("expense-tracker", JSON.stringify({ expenses: currExpenses }));
-      return currExpenses;
-    });
-  };
-
-  // return React.createElement(
-  //   'div',
-  //   {},
-  //   React.createElement('h2', {}, "Let's get started!"),
-  //   React.createElement(Expenses, { items: expenses })
-  // );
+  useEffect(() => {
+    const token = JSON.parse(localStorage.getItem("expense-tracker"))?.token;
+    if (token) {
+      try {
+        axios
+          .get(AUTH_TOKEN_ENDPOINT + "/" + token)
+          .then((res) => {
+            setUser(res.data);
+          })
+          .catch((err) => console.log(err));
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }, []);
 
   return (
-    <div className=''>
-      <h1 className='app__heading'>
-        Expense Tracker
-      </h1>
-      <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses items={expenses} />
-    </div>
+    <Router>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Routes>
+          <Route exact path={HOME_ROUTE} element={<Home />} />
+          <Route exact path={SIGN_IN_ROUTE} element={<SignIn />} />
+          <Route exact path={SIGN_UP_ROUTE} element={<SignUp />} />
+        </Routes>
+      </UserContext.Provider>
+    </Router>
   );
 };
 

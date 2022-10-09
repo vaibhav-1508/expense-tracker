@@ -1,0 +1,26 @@
+.home__heading{
+  max-width: 95%;
+  text-align: center;
+  margin: 2rem auto;
+  background-color: #b4f3f3;
+  border-radius: 12px;
+  width: 50rem;
+  padding: 1rem;
+}
+
+.home > .MuiIconButton-root{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  color: white;
+  background-color: black;
+  border: 2px solid white;
+  transition:  all 0.5s;
+}
+
+.home > .MuiIconButton-root:hover{
+  transform: scale(0.95);
+  color: black;
+  background-color: white;
+  border: 2px solid black;
+}
